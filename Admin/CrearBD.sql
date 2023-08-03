@@ -15,7 +15,7 @@ CREATE TABLE usuarios (
 CREATE TABLE rol (
     idrol INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(10),
-    detalle VARCHAR(255),
+    detalle VARCHAR(255)
 )
 
 CREATE TABLE permisos (
@@ -27,11 +27,13 @@ CREATE TABLE permisos (
 CREATE TABLE asig_permisos (
     idrol INT KEY,
     idpermiso INT,
-    FOREIGN KEY (idpermiso) REFERENCES permisos(idpermiso) ON DELETE CASCADE
+    FOREIGN KEY (idrol) REFERENCES rol(idrol) ON DELETE CASCADE,
+    FOREIGN KEY (idpermiso) REFERENCES permisos(idpermiso)
 )
 
 CREATE TABLE articulo (
-    idcategoria INT AUTO_INCREMENT PRIMARY KEY,
+    idarticulo INT AUTO_INCREMENT PRIMARY KEY,
+    idcategoria INT,
     codigo VARCHAR(50),
     nombre VARCHAR(100),
     precio_venta DECIMAL(11,2),
@@ -41,5 +43,11 @@ CREATE TABLE articulo (
     descripcion VARCHAR(255),
     imagen VARCHAR(20),
     estado BIT,
-    compuesto BOOLEAN,
+    compuesto BOOLEAN
+)
+
+CREATE TABLE asticulos_compuestos (
+    idarticulo INT KEY,
+    idcomponente INT,
+    cantidad INT
 )

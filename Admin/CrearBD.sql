@@ -1,3 +1,7 @@
+CREATE USER 'hermespos'@'localhost' IDENTIFIED BY 'Cronos71@';
+CREATE DATABASE hermespos_db;
+GRANT ALL PRIVILEGES ON hermespos_db.* TO 'hermespos'@'localhost';
+
 CREATE TABLE usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
     idrol INT,

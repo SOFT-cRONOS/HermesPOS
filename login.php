@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit;
     } else {
-        // Inicio de sesión fallido, redirigir de vuelta a index.php con mensaje de error por query string
+        // Inicio de sesión fallido, redirigir de vuelta a login.php con mensaje de error por query string
         header("Location: login.php?error=invalid&username=". urlencode($username) );
         exit;
     }

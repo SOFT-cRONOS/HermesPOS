@@ -1,45 +1,22 @@
 <?php
-// Función para cerrar la sesión
-function cerrarSesion() {
-    // Borrar la cookie de inicio de sesión al cerrar sesión
-    setcookie('UserName_init', '', time() - 3600, '/');
-    
-    // Iniciar sesión (si aún no está iniciada)
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    
-    // Destruir la sesión
-    session_destroy();
-    
-    // Redirigir al usuario a la página de inicio de sesión
-    header("Location: login.php");
-    exit;
-}
-
-
-
-
 
 // Iniciar la sesión para acceder a las variables de sesión
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y obtener el nombre de usuario guardado en una cookie por 30 días
-if (isset($_COOKIE['UserName_init']) && !isset($_SESSION['username'])) {
-    $_SESSION['username'] = $_COOKIE['UserName_init'];
-    $username = $_SESSION['username'];
-    echo $username;
+// Si el usuario no ha iniciado sesión, redirigir al login
+if (!isset($_COOKIE['UserName_init']) && !isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
 }
 else {
-    // Si el usuario no ha iniciado sesión, redirigir al login
-    //header("Location: login.php");
-    //exit;
+    // Verificar si el usuario ha iniciado sesión y obtener el nombre de usuario guardado en una cookie por 30 días
+    $_SESSION['username'] = $_COOKIE['UserName_init'];
+    $username = $_SESSION['username'];
 }
-?>
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -770,7 +747,7 @@ else {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="#" onclick="cerrarSesion()">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>

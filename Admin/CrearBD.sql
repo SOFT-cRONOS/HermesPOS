@@ -112,4 +112,22 @@ CREATE TABLE detalle_ingreso (
     FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo)
 )
 
+CREATE TABLE cliente (
+    idcliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    documento VARCHAR(20) UNIQUE,
+    direccion VARCHAR(70),
+    telefono VARCHAR(20),
+    email VARCHAR(50) UNIQUE,
+    empresa VARCHAR(30)
+)
 
+CREATE TABLE tipo_pago (
+    idtipopago INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(10),
+    detalle VARCHAR(50)
+)
+
+CREATE TABLE transaccion (
+    
+)

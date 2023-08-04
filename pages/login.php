@@ -2,8 +2,9 @@
 // Obtener la ruta absoluta del directorio actual
 $dir = __DIR__;
 
+
 // Construir la ruta completa al archivo de conexión
-$connection_file = $dir . '/Admin/conect.php';
+$connection_file = '../Admin/conect.php';
 
 // Verificar si el archivo existe antes de incluirlo
 if (file_exists($connection_file)) {
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Consulta para obtener el usuario y la contraseña de la tabla usuarios que coincidan con lo ingresado
     
-    $sql = "SELECT * FROM usuarios WHERE nombre = '$username' AND contrasena = '$password'";
+    $sql = "SELECT * FROM usuario WHERE nick = '$username' AND contrasena = '$password'";
     // Ejecutar la consulta
     $result = $conn->query($sql);
 
@@ -31,11 +32,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION['username'] = $username;
 
+        //Busco el nombre completo del usuario
+        $sql = "SELECT nombre FROM usuario WHERE nick = 'admin'";
+        $result = $conn->query($sql);
+
+        // Verificar si se obtuvieron resultados
+        if ($result->num_rows > 0) {
+            // Obtener el resultado de la consulta y cargar el nombre en la variable $nombre_completo
+            $row = $result->fetch_assoc();
+            $nombre_completo = $row["nombre"];
+        } else {
+            echo "No se encontró ningún usuario con el nick 'admin'.";
+        }
+
         // Guardar información del usuario en una cookie
-        setcookie('UserName_init', $username, time() + (86400 * 30), '/'); // Caduca en 30 días
+        // Establecer el tiempo de expiración de la cookie (en segundos desde el momento actual)
+        $expiracion = time() + (86400 * 30); // la cookie expirará en 30 días
+
+        // Valores a guardar en la cookie
+        $datos = array(
+            'UserName_init' => $username,
+            'UserDataName' => $nombre_completo
+        );
+        
+        // Convertir el array en formato JSON
+        $datos_json = json_encode($datos);
+        
+        // Crear la cookie con los datos en formato JSON
+        setcookie("login_data", $datos_json, $expiracion, "/");
+                        // metodo solo nombre
+                        // Convertir el array en formato JSON
+                        //$datos_json = json_encode($datos);
+                        //setcookie('UserName_init', $username, time() + (86400 * 30), '/'); // Caduca en 30 días
 
         // Redirigir a la página home"
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit;
     } else {
         // Inicio de sesión fallido, redirigir de vuelta a login.php con mensaje de error por query string
@@ -63,13 +94,13 @@ $conn->close();
     <title>SB Admin 2 - Login</title>
 
     <!-- Custom fonts for this template-->
-    <link href="pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="pages/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 

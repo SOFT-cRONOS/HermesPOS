@@ -149,5 +149,8 @@ CREATE TABLE tipo_pago (
 )
 
 CREATE TABLE transaccion (
+    idtransaccion INT AUTO_INCREMENT PRIMARY KEY,
+    idcliente INT,
+    tipo_comprobante VARCHAR(20),
     
 )

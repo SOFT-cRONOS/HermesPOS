@@ -1,3 +1,7 @@
+CREATE USER 'hermespos'@'localhost' IDENTIFIED BY 'Cronos71@';
+CREATE DATABASE hermespos_db;
+GRANT ALL PRIVILEGES ON hermespos_db.* TO 'hermespos'@'localhost';
+
 CREATE TABLE usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
     idrol INT,
@@ -12,11 +16,19 @@ CREATE TABLE usuario (
     FOREIGN KEY (idrol) REFERENCES rol(idrol)
 )
 
+INSERT INTO usuario (idrol, nick, documento, nombre, direccion, telefono, email, contrasena, estado)
+VALUES (1, 'admin', '1234', 'Administrador','Dirección', 'hermespos', 'usuario1@example.com', 'hermespos', 'activo'),
+
+
+
 CREATE TABLE rol (
     idrol INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(10),
     detalle VARCHAR(255)
 )
+
+INSERT INTO rol (nombre, detalle)
+VALUES ('admin', 'tiene control total sobre la aplicacion y los datos'),
 
 CREATE TABLE permisos (
     idpermiso INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,9 +36,11 @@ CREATE TABLE permisos (
     detalle VARCHAR(255)
 )
 
+
+
 CREATE TABLE asig_permisos (
-    idrol INT KEY,
-    idpermiso INT,
+    idrol INT,
+    INDEX idrol_index (idrol),
     FOREIGN KEY (idrol) REFERENCES rol(idrol) ON DELETE CASCADE,
     FOREIGN KEY (idpermiso) REFERENCES permisos(idpermiso)
 )

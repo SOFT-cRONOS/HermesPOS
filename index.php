@@ -1,19 +1,47 @@
+
+<!-- Inicio modulo de base de php -->
 <?php
+// Obtener la ruta absoluta del directorio actual
+$dir = __DIR__;
+
+
+
+// Construir la ruta completa al archivo de conexión
+$connection_file = $dir . '/Admin/conect.php';
+
+// Verificar si el archivo existe antes de incluirlo
+if (file_exists($connection_file)) {
+    require_once $connection_file;
+} else {
+    die("Archivo de conexión no encontrado en $dir/Admin/conect.php.");
+}
+
 
 // Iniciar la sesión para acceder a las variables de sesión
 session_start();
 
 // Si el usuario no ha iniciado sesión, redirigir al login
-if (!isset($_COOKIE['UserName_init']) && !isset($_SESSION['username'])) {
-    header("Location: login.php");
+if (!isset($_COOKIE['login_data']) && !isset($_SESSION['username'])) {
+    header("Location: pages/login.php");
     exit;
 }
 else {
-    // Verificar si el usuario ha iniciado sesión y obtener el nombre de usuario guardado en una cookie por 30 días
-    $_SESSION['username'] = $_COOKIE['UserName_init'];
+    // Obtener el valor de la cookie en formato JSON
+    $datos_json = $_COOKIE['login_data'];
+
+    // Convertir el JSON a un array asociativo
+    $datos = json_decode($datos_json, true);
+
+    // Usar los valores
+    $_SESSION['username'] = $datos['UserName_init'];
+    $nombre_completo = $datos['UserDataName'];
     $username = $_SESSION['username'];
 }
+
+// Cerrar la conexión
+$conn->close();
  ?>
+<!-- Fin modulo de base de php -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +89,7 @@ else {
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Inicio</span></a>
             </li>
 
             <!-- Divider -->
@@ -69,26 +97,28 @@ else {
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Punto de Venta
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <!-- botones de Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Articulos</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <!-- subtitulo <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item" href="pages/productos.php">Lista de Productos</a>
+                        <a class="collapse-item" href="pages/cards.html">Nuevo Producto</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -105,11 +135,11 @@ else {
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+            
             <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
@@ -142,6 +172,7 @@ else {
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
+
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
@@ -346,7 +377,7 @@ else {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $username; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $nombre_completo; ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -747,7 +778,7 @@ else {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="Admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>

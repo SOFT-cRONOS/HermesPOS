@@ -36,14 +36,20 @@ CREATE TABLE permisos (
     detalle VARCHAR(255)
 )
 
+INSERT INTO permisos (nombre, detalle)
+VALUES ('editar', 'Ver y agregar nuevos productos y clientes')
 
 
 CREATE TABLE asig_permisos (
     idrol INT,
+    idpermiso INT,
     INDEX idrol_index (idrol),
     FOREIGN KEY (idrol) REFERENCES rol(idrol) ON DELETE CASCADE,
     FOREIGN KEY (idpermiso) REFERENCES permisos(idpermiso)
 )
+
+INSERT TABLE asig_permisos (idrol, idpermiso)
+VALUES (1,1),
 
 CREATE TABLE articulo (
     idarticulo INT AUTO_INCREMENT PRIMARY KEY,

@@ -2,7 +2,7 @@
 <?php
 // Configuración de la conexión a la base de datos
 $servername = "localhost";
-$username = "hermespos";
+$username = "admin";
 $password = "Cronos71@";
 $dbname = "hermespos";
 

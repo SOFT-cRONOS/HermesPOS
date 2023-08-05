@@ -1,6 +1,6 @@
-CREATE USER 'hermespos'@'localhost' IDENTIFIED BY 'Cronos71@';
-CREATE DATABASE hermespos_db;
-GRANT ALL PRIVILEGES ON hermespos_db.* TO 'hermespos'@'localhost';
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'Cronos71@';
+CREATE DATABASE hermespos;
+GRANT ALL PRIVILEGES ON hermespos.* TO 'admin'@'localhost';
 
 
 CREATE TABLE rol (

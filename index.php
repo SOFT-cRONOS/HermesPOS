@@ -74,12 +74,12 @@ $conn->close();
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
+            <!-- Sidebar - Brand - Marca del programa -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon "><!--rotate-n-15-->
+                    <img class="im-profile rounded - circle"  src="Admin/HermesPOS-LOGO.svg" width="100">
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">HERMES <sup>POS</sup></div>
             </a>
 
             <!-- Divider -->

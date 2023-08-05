@@ -10,12 +10,20 @@ Funciones del software
         -Recuperar contraseña
         -Solicitar registro
 
-    Usuario
-        -Nuevo Usuario
-        -Usuarios conectados
-        -chat(a futuro)
+    Punto de venta
+        -Vender
+            -Nueva orden
+            -Nueva transaccion (Presupuesto, Pedido, Venta)
+            -Entregas pendientes
+            -Pedidos pendientes
+            -Reportes de ventas
+        -Clientes
+            -Agenda
+            -Nuevo Cliente
+            -Reportes
+            -Sistema de puntos (A futuro)
 
-    Productos
+    Articulos
         -Listado de productos
             -Recuento de inventario
             -Control de precios compra
@@ -27,29 +35,24 @@ Funciones del software
         -Descuentos
             -Por cantidad
             -Por categoria
-        -Ver ingresos
-        -Proveedores
+        -Historial de inventario
+            -Proveedores
         -Categorias
-
-    Ventas
-        -Nueva transaccion (Presupuesto, Pedido, Venta)
-        -Entregas pendientes
-        -Pedidos pendientes
-        -Reportes de ventas
-    
-    Clientes
-        -Agenda
-        -Nuevo Cliente
-
+      
     Configuracion
-        -Empresa
-        -Impustos
-        -Descuentos
-        -Ganancias
-        -Permisos de usuario
-        -Alarma de stock
-        -Metodos de pago
-        -Pantalla pedidos(a futuro)
+        -Usuarios
+            -Nuevo Usuario
+            -Usuarios conectados
+            -chat(a futuro)
+        -Preferencias
+            -Empresa
+            -Impustos
+            -Descuentos
+            -Ganancias
+            -Permisos de usuario
+            -Alarma de stock
+            -Metodos de pago
+            -Pantalla pedidos(a futuro)
 
 Datos ingreso
 

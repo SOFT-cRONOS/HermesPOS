@@ -185,4 +185,11 @@ CREATE TABLE pagos (
     monto DECIMAL(11, 2),
     fecha_pago DATE,
     FOREIGN KEY (idtransaccion) REFERENCES transaccion(idtransaccion)
-)
+);
+
+CREATE TABLE alertas (
+    idalerta INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(50),
+    mensaje VARCHAR(255),
+    fecha_creacion DATE
+);

@@ -160,6 +160,9 @@ CREATE TABLE tipo_pago (
     detalle VARCHAR(50)
 );
 
+INSERT INTO tipo_pago (nombre, detalle)
+VALUES ('efectivo', 'pago en efectivo billete fisico');
+
 CREATE TABLE transaccion (
     idtransaccion INT AUTO_INCREMENT PRIMARY KEY,
     idcliente INT,
@@ -178,6 +181,11 @@ CREATE TABLE transaccion (
     FOREIGN KEY (idtipo_pago) REFERENCES tipo_pago(idtipopago)
 );
 
+INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
+VALUES (1, '2023/08/06', '2023/08/05', '2000', '2000', 1, 'finalizado', 'pagado');
+
+
+
 CREATE TABLE pagos (
     idpago INT AUTO_INCREMENT PRIMARY KEY,
     idtransaccion INT,
@@ -193,3 +201,13 @@ CREATE TABLE alertas (
     mensaje VARCHAR(255),
     fecha_creacion DATE
 );
+
+DELIMITER //
+
+CREATE PROCEDURE GetLogUser(IN htmlnick VARCHAR(20), IN htmlpass VARCHAR(20))
+BEGIN
+    SELECT * FROM usuario WHERE nick = htmlnick AND contrasena = htmlpass;
+END //
+
+DELIMITER ;
+

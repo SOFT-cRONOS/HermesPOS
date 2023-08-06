@@ -16,13 +16,16 @@ if (file_exists($connection_file)) {
 
 // Verificar si se ha enviado el formulario de inicio de sesión
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los valores del formulario de inicio de sesión
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    // Obtener los valores del formulario de inicio de sesión y sanitizarlos
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
 
     // Consulta para obtener el usuario y la contraseña de la tabla usuarios que coincidan con lo ingresado
     
-    $sql = "SELECT * FROM usuario WHERE nick = '$username' AND contrasena = '$password'";
+    // $sql = "SELECT * FROM usuario WHERE nick = '$username' AND contrasena = '$password'";
+    $sql = "CALL GetLogUser('$username', '$password')";
+    
     // Ejecutar la consulta
     $result = $conn->query($sql);
 

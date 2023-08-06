@@ -38,10 +38,59 @@ else {
     $username = $_SESSION['username'];
 }
 
-// Cerrar la conexión
-$conn->close();
+
  ?>
 <!-- Fin modulo de base de php -->
+
+<!-- Modulo constructor datos Home -->
+<?php
+
+//detras se ejecuta chart-area-demo.js para el grafico lineal
+
+//obtener suma de ventas del mes actual
+    // Obtener el mes actual en formato numérico (1 a 12)
+    $mes_actual = date('n');
+
+    // Consulta para obtener el total de ventas del mes actual con estado "finalizada" y "pagado"
+    $sql = "SELECT SUM(total) as total_mes_actual FROM transaccion
+            WHERE estado = 'finalizada' AND estado_pago = 'pagado' AND MONTH(fecha_venta) = $mes_actual";
+    $result = $conn->query($sql);
+
+    $total_mes_actual = 0; // Inicializa el total en caso de que no haya registros
+
+    // Obtener el total del mes actual
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $total_mes_actual = (float)$row['total_mes_actual'];
+    }
+
+//obtener suma de ventas del dia actual
+    // Obtener la fecha actual en formato Y-m-d
+    $fecha_actual = date('Y-m-d');
+
+    // Consulta para obtener el total de ventas del día actual con estado "finalizada" y "pagado"
+    $sql = "SELECT SUM(total) as total_dia_actual FROM transaccion
+            WHERE estado = 'finalizada' AND estado_pago = 'pagado' AND DATE(fecha_venta) = '$fecha_actual'";
+    $result = $conn->query($sql);
+
+    $total_dia_actual = 0; // Inicializa el total en caso de que no haya registros
+
+    // Obtener el total del día actual
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $total_dia_actual = (float)$row['total_dia_actual'];
+    }
+
+// Cerrar la conexión
+$conn->close();
+
+
+?>
+
+<!-- Fin Modulo constructor datos Home -->
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -384,7 +433,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 ACUMULADO (ESTE MES)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<?php echo $total_mes_actual ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -402,7 +451,7 @@ $conn->close();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 ACUMULADO (HOY)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$5,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<?php echo $total_dia_actual ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

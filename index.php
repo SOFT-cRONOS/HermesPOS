@@ -1,94 +1,33 @@
 
-<!-- Inicio modulo de base de php -->
-<?php
-// Obtener la ruta absoluta del directorio actual
-$dir = __DIR__;
-
-
-
-// Construir la ruta completa al archivo de conexión
-$connection_file = $dir . '/Admin/conect.php';
-
-// Verificar si el archivo existe antes de incluirlo
-if (file_exists($connection_file)) {
-    require_once $connection_file;
-} else {
-    die("Archivo de conexión no encontrado en $dir/Admin/conect.php.");
-}
-
-
-// Iniciar la sesión para acceder a las variables de sesión
-session_start();
-
-// Si el usuario no ha iniciado sesión, redirigir al login
-if (!isset($_COOKIE['login_data']) && !isset($_SESSION['username'])) {
-    header("Location: pages/login.php");
-    exit;
-}
-else {
-    // Obtener el valor de la cookie en formato JSON
-    $datos_json = $_COOKIE['login_data'];
-
-    // Convertir el JSON a un array asociativo
-    $datos = json_decode($datos_json, true);
-
-    // Usar los valores
-    $_SESSION['username'] = $datos['UserName_init'];
-    $nombre_completo = $datos['UserDataName'];
-    $username = $_SESSION['username'];
-}
-
-
- ?>
-<!-- Fin modulo de base de php -->
-
-<!-- Modulo constructor datos Home -->
 <?php
 
-//detras se ejecuta chart-area-demo.js para el grafico lineal
 
-//obtener suma de ventas del mes actual
-    // Obtener el mes actual en formato numérico (1 a 12)
-    $mes_actual = date('n');
+//graficador
+//require_once "Admin/get_data_ventas.php";
+//coneccion y datos de usuario
+require_once "Admin/conect.php";
 
-    // Consulta para obtener el total de ventas del mes actual con estado "finalizada" y "pagado"
-    $sql = "SELECT SUM(total) as total_mes_actual FROM transaccion
-            WHERE estado = 'finalizada' AND estado_pago = 'pagado' AND MONTH(fecha_venta) = $mes_actual";
-    $result = $conn->query($sql);
+//modulos
+require_once "modules/home.php";
 
-    $total_mes_actual = 0; // Inicializa el total en caso de que no haya registros
+$datos = verificar_init();
 
-    // Obtener el total del mes actual
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $total_mes_actual = (float)$row['total_mes_actual'];
-    }
+$_SESSION['username'] = $datos['UserName_init'];
+$nombre_completo = $datos['UserDataName'];
+$username = $_SESSION['username'];
 
-//obtener suma de ventas del dia actual
-    // Obtener la fecha actual en formato Y-m-d
-    $fecha_actual = date('Y-m-d');
+$conn = connect_sql();
 
-    // Consulta para obtener el total de ventas del día actual con estado "finalizada" y "pagado"
-    $sql = "SELECT SUM(total) as total_dia_actual FROM transaccion
-            WHERE estado = 'finalizada' AND estado_pago = 'pagado' AND DATE(fecha_venta) = '$fecha_actual'";
-    $result = $conn->query($sql);
+$valores = init_home($conn);
 
-    $total_dia_actual = 0; // Inicializa el total en caso de que no haya registros
-
-    // Obtener el total del día actual
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $total_dia_actual = (float)$row['total_dia_actual'];
-    }
+$total_mes_actual = $valores[0];
+$total_dia_actual = $valores[1];
+$pedidos_pendientes = $valores[2];
 
 // Cerrar la conexión
 $conn->close();
 
-
 ?>
-
-<!-- Fin Modulo constructor datos Home -->
-
 
 
 
@@ -467,16 +406,16 @@ $conn->close();
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">PEDIDOS
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">PEDIDOS TERMINADOS
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $pedidos_pendientes?>%</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            style="width: <?php echo $pedidos_pendientes?>%" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>

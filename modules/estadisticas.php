@@ -1,59 +1,67 @@
 <?php
-    //coneccion y datos de usuario
-    require_once "Admin/conect.php";
 
     function palco_productos($conn){
-    // Realiza la consulta SQL para obtener los 3 productos más vendidos
-    $sql = "SELECT idarticulo, COUNT(*) AS total_ventas FROM detalle_transaccion GROUP BY idarticulo ORDER BY total_ventas DESC LIMIT 3";
-
-    // Ejecuta la consulta
-    $result = $conn->query($sql);
-
-    // Crea un array para almacenar los datos de los productos más vendidos
+    // Define the array to store the sales per category
     $productos_mas_vendidos = array();
 
-    // Inicializa una variable para almacenar el total de productos vendidos
-    $total_productos_vendidos = 0;
+    // SQL query to get the number of sales per category
+    $sql = "SELECT c.nombre AS categoria, COUNT(dt.idarticulo) AS total_ventas
+            FROM categoria c
+            LEFT JOIN articulo a ON c.idcategoria = a.idcategoria
+            LEFT JOIN detalle_transaccion dt ON a.idarticulo = dt.idarticulo
+            GROUP BY c.nombre";
 
-    // Verifica si hay resultados y calcula el total de productos vendidos
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $total_productos_vendidos += $row['total_ventas'];
-        }
-    }
+    $result = $conn->query($sql);
 
-    // Verifica si el total de productos vendidos es mayor que cero (para evitar división por cero)
-    if ($total_productos_vendidos > 0) {
-        // Itera a través de los resultados y almacena los datos de los productos más vendidos en el array
+    if ($result) {
         while ($row = $result->fetch_assoc()) {
-            $idarticulo = $row['idarticulo'];
+            $categoria = $row['categoria'];
             $total_ventas = $row['total_ventas'];
 
-            // Consulta para obtener los detalles del producto
-            $sql_producto = "SELECT * FROM articulo WHERE idarticulo = $idarticulo";
-            $result_producto = $conn->query($sql_producto);
-
-            // Verifica si hay resultados y obtén los detalles del producto
-            if ($result_producto->num_rows > 0) {
-                $producto = $result_producto->fetch_assoc();
-                $nombre_producto = $producto['nombre'];
-                $precio_venta = $producto['precio_venta'];
-
-                // Calcula el porcentaje de ventas del producto sobre el total
-                $porcentaje_ventas = ($total_ventas / $total_productos_vendidos) * 100;
-
-                // Almacena los datos en el array de productos más vendidos
-                $productos_mas_vendidos[] = array(
-                    'nombre' => $nombre_producto,
-                    'total_ventas' => $total_ventas,
-                    'ingresos' => $total_ventas * $precio_venta,
-                    'porcentaje_ventas' => $porcentaje_ventas
-                );
-            }
+            // Add the category and its total sales to the array
+            $productos_mas_vendidos[] = array(
+                'categoria' => $categoria,
+                'total_ventas' => (int)$total_ventas,
+            );
         }
+
+        // Free the result set
+        $result->free();
     }
 
     // Devuelve el array con los datos de los productos más vendidos
     return $productos_mas_vendidos;
+}
+
+
+function montos_mes($con){
+        //coneccion y datos de usuario
+    require_once "Admin/conect.php";
+
+    $conn = connect_sql();
+
+
+    // Consulta para obtener los montos por mes
+    $sql = "SELECT MONTH(fecha_venta) as mes, SUM(total) as monto_mes
+    FROM transaccion
+    WHERE fecha_venta IS NOT NULL
+    GROUP BY mes
+    ORDER BY mes;";
+    $result = $conn->query($sql);
+
+    $montos_por_mes = array_fill(0, 12, 0); // Inicializa el array con ceros
+
+    // Llena el array con los montos por mes obtenidos de la base de datos
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $mes = (int)$row['mes'];
+            $monto_mes = (float)$row['monto_mes'];
+            $montos_por_mes[$mes] = $monto_mes; // Los meses están indexados desde 1 poniendo $mes-1
+        }
+    }
+
+    // Devuelve el array como una respuesta JSON
+    //header('Content-Type: application/json');
+    return json_encode($montos_por_mes);
 }
 ?>

@@ -1,6 +1,6 @@
 
 <?php
-
+//configurar todos los graficos al pie y eliminar archivos originales.
 
 //graficador
 //require_once "Admin/get_data_ventas.php";
@@ -9,6 +9,9 @@ require_once "Admin/conect.php";
 
 //modulos
 require_once "modules/home.php";
+require_once "modules/estadisticas.php";
+
+$conn = connect_sql();
 
 $datos = verificar_init();
 
@@ -16,7 +19,7 @@ $_SESSION['username'] = $datos['UserName_init'];
 $nombre_completo = $datos['UserDataName'];
 $username = $_SESSION['username'];
 
-$conn = connect_sql();
+
 
 $valores = init_home($conn);
 
@@ -66,7 +69,7 @@ $conn->close();
             <!-- Sidebar - Brand - Marca del programa -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon "><!--rotate-n-15-->
-                    <img class="im-profile"  src="Admin/logo100x.png" width="50"> <!--rounded - circle-->
+                    <img class="im-profile"  src="pages/img/logo100x.png" width="50"> <!--rounded - circle-->
                 </div>
                 <div class="sidebar-brand-text mx-3">HERMES <sup>POS</sup></div>
             </a>
@@ -484,7 +487,7 @@ $conn->close();
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <!-- Pie Chart - Productos mas vendidos-->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -513,13 +516,13 @@ $conn->close();
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> <?php echo $productos_mas_vendidos[0]['categoria']?>
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-success"></i> <?php echo $productos_mas_vendidos[1]['categoria']?>
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-info"></i> <?php echo $productos_mas_vendidos[2]['categoria']?>
                                         </span>
                                     </div>
                                 </div>
@@ -713,12 +716,12 @@ $conn->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Exit" si usted cree que esta listo para cerrar el programa, en caso contrario seleccione "Cancel".</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="Admin/logout.php">Logout</a>
@@ -726,6 +729,19 @@ $conn->close();
             </div>
         </div>
     </div>
+
+
+    <script>
+        //Separa el array productos mas vendidos en etiquetas y valores
+        var productosMasVendidos = <?php echo json_encode($productos_mas_vendidos); ?>;
+        //variables globales para graficar
+        window.categorias = productosMasVendidos.map(producto => producto.categoria);
+        window.totalVentas = productosMasVendidos.map(producto => producto.total_ventas);
+        //valores para grafico lineal
+        window.ventasMes = <?php echo montos_mes($conn)?>;
+        console.log(window.ventasMes)
+    </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="pages/vendor/jquery/jquery.min.js"></script>
@@ -740,9 +756,12 @@ $conn->close();
     <!-- Page level plugins -->
     <script src="pages/vendor/chart.js/Chart.min.js"></script>
 
+
     <!-- Page level custom scripts -->
-    <script src="pages/js/demo/chart-area-demo.js"></script>
-    <script src="pages/js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="pages/js/demo/chart-area-demo.js"></script>-->
+    <!-- <script src="pages/js/demo/chart-pie-demo.js"></script>-->
+    <script src="pages/js/grafico-torta.js"></script>
+    <script src="pages/js/grafico-lineal.js"></script>
 
 </body>
 

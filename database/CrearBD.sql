@@ -202,7 +202,7 @@ CREATE TABLE detalle_transaccion (
 );
 
 INSERT INTO detalle_transaccion (idventa, idarticulo, id_variante, cantidad, precio, descuento)
-VALUES (5, 1, NULL, 5, 200,0);
+VALUES (4, 1, NULL, 5, 200,0);
 
 
 CREATE TABLE pagos (

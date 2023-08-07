@@ -88,7 +88,7 @@ function verificar_init(){ //da los datos de usuario o manda al login
 
     // Si el usuario no ha iniciado sesión, redirigir al login
     if (!isset($_COOKIE['login_data']) && !isset($_SESSION['username'])) {
-        header("Location: ../pages/login.php");
+        header("Location: pages/login.php");
         exit;
     }
     else {

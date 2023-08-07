@@ -1,18 +1,8 @@
 <?php
-// Obtener la ruta absoluta del directorio actual
-$dir = __DIR__;
+//coneccion y datos de usuario
+require_once "Admin/conect.php";
 
-
-
-// Construir la ruta completa al archivo de conexión
-$connection_file = '../Admin/conect.php';
-
-// Verificar si el archivo existe antes de incluirlo
-if (file_exists($connection_file)) {
-    require_once $connection_file;
-} else {
-    die("Archivo de conexión no encontrado en $dir /conect.php.");
-}
+$conn = connect_sql();
 
 
 // Consulta para obtener los montos por mes
@@ -31,7 +21,7 @@ if ($result->num_rows > 0) {
 }
 
 // Devuelve el array como una respuesta JSON
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 echo json_encode($montos_por_mes);
 
 // Cierra la conexión

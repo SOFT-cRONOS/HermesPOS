@@ -1,18 +1,6 @@
 <?php
-// Obtener la ruta absoluta del directorio actual
-$dir = __DIR__;
 
-
-// Construir la ruta completa al archivo de conexión
-$connection_file = '../Admin/conect.php';
-
-// Verificar si el archivo existe antes de incluirlo
-if (file_exists($connection_file)) {
-    require_once $connection_file;
-} else {
-    die("Archivo de conexión no encontrado en $dir/Admin/conect.php.");
-}
-
+require_once "../Admin/conect.php";
 
 // Verificar si se ha enviado el formulario de inicio de sesión
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -22,63 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Consulta para obtener el usuario y la contraseña de la tabla usuarios que coincidan con lo ingresado
+    verificar_usuario($username, $password);
     
-    // $sql = "SELECT * FROM usuario WHERE nick = '$username' AND contrasena = '$password'";
-    $sql = "CALL GetLogUser('$username', '$password')";
-    
-    // Ejecutar la consulta
-    $result = $conn->query($sql);
-
-    // Verificar si el usuario y la contraseña son válidos
-    if ($result->num_rows === 1) {
-        // Iniciar sesión para guardar el nombre de usuario
-        session_start();
-        $_SESSION['username'] = $username;
-
-        //Busco el nombre completo del usuario
-        $sql = "SELECT nombre FROM usuario WHERE nick = 'admin'";
-        $result = $conn->query($sql);
-
-        // Verificar si se obtuvieron resultados
-        if ($result->num_rows > 0) {
-            // Obtener el resultado de la consulta y cargar el nombre en la variable $nombre_completo
-            $row = $result->fetch_assoc();
-            $nombre_completo = $row["nombre"];
-        } else {
-            echo "No se encontró ningún usuario con el nick 'admin'.";
-        }
-
-        // Guardar información del usuario en una cookie
-        // Establecer el tiempo de expiración de la cookie (en segundos desde el momento actual)
-        $expiracion = time() + (86400 * 30); // la cookie expirará en 30 días
-
-        // Valores a guardar en la cookie
-        $datos = array(
-            'UserName_init' => $username,
-            'UserDataName' => $nombre_completo
-        );
-        
-        // Convertir el array en formato JSON
-        $datos_json = json_encode($datos);
-        
-        // Crear la cookie con los datos en formato JSON
-        setcookie("login_data", $datos_json, $expiracion, "/");
-                        // metodo solo nombre
-                        // Convertir el array en formato JSON
-                        //$datos_json = json_encode($datos);
-                        //setcookie('UserName_init', $username, time() + (86400 * 30), '/'); // Caduca en 30 días
-
-        // Redirigir a la página home"
-        header("Location: ../index.php");
-        exit;
-    } else {
-        // Inicio de sesión fallido, redirigir de vuelta a login.php con mensaje de error por query string
-        header("Location: login.php?error=invalid&username=". urlencode($username) );
-        exit;
-    }
 }
-//cierro coneccion
-$conn->close();
 ?>
 
 
@@ -192,6 +126,10 @@ $conn->close();
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    <?php
+    // Impresión en consola utilizando JavaScript
+    echo "<script>console.log('Mensaje desde PHP: " . $mensaje . "');</script>";
+    ?>
 </body>
 
 </html>

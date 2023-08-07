@@ -182,8 +182,13 @@ CREATE TABLE transaccion (
 );
 
 INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
-VALUES (1, '2023/08/06', '2023/08/05', '2000', '2000', 1, 'finalizado', 'pagado');
-
+VALUES (1, '2023/08/06', '2023/08/05', '2000', '2000', 1, 'finalizada', 'pagado');
+INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
+VALUES (1,NULL, '2023/08/06', '500', '1500', 1, 'terminado', 'parcial');
+INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
+VALUES (1,NULL, '2023/08/07', '500', '1500', 1, 'pendiente', 'parcial');
+INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
+VALUES (1,NULL, '2023/08/07', '200', '10000', 1, 'pendiente', 'parcial');
 
 
 CREATE TABLE pagos (

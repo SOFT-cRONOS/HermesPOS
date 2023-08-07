@@ -127,5 +127,5 @@ xhttp.onreadystatechange = function() {
         });
     }
 }
-xhttp.open("GET", "Admin/get_data_ventas.php", true);
+xhttp.open("GET", "../../../Admin/get_data_ventas.php", true);
 xhttp.send();

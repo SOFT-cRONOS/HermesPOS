@@ -23,6 +23,7 @@ $valores = init_home($conn);
 $total_mes_actual = $valores[0];
 $total_dia_actual = $valores[1];
 $pedidos_pendientes = $valores[2];
+$productos_mas_vendidos = palco_productos($conn);
 
 // Cerrar la conexión
 $conn->close();
@@ -41,7 +42,7 @@ $conn->close();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>HermesPOS - Inicio</title>
 
     <!-- Custom fonts for this template-->
     <link href="pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -489,7 +490,7 @@ $conn->close();
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">PRODUCTOS MAS VENDIDOS</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

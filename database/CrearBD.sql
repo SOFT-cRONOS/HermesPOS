@@ -190,6 +190,20 @@ VALUES (1,NULL, '2023/08/07', '500', '1500', 1, 'pendiente', 'parcial');
 INSERT INTO transaccion (idcliente, fecha_venta, fecha_pedido, pago, total, idtipo_pago, estado, estado_pago)
 VALUES (1,NULL, '2023/08/07', '200', '10000', 1, 'pendiente', 'parcial');
 
+CREATE TABLE detalle_transaccion (
+    idventa INT,
+    idarticulo INT,
+    id_variante INT,
+    cantidad INT,
+    precio decimal(11,2),
+    descuento decimal(11,2),
+    FOREIGN KEY (idventa) REFERENCES transaccion(idtransaccion),
+    FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo)
+);
+
+INSERT INTO detalle_transaccion (idventa, idarticulo, id_variante, cantidad, precio, descuento)
+VALUES (5, 1, NULL, 5, 200,0);
+
 
 CREATE TABLE pagos (
     idpago INT AUTO_INCREMENT PRIMARY KEY,

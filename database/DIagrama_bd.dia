@@ -93,6 +93,7 @@
   <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="false"/>
+  <dia:layer name="Fondo" visible="true" connectable="false"/>
   <dia:layer name="Fondo" visible="true" connectable="true" active="true">
     <dia:object type="Database - Table" version="0" id="O0">
       <dia:attribute name="obj_pos">
@@ -5120,7 +5121,7 @@
         <dia:point val="48.4682,3.65847"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="33.8546,-2.9309;48.5182,3.70847"/>
+        <dia:rectangle val="33.8546,-2.9209;48.5182,3.70847"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -5186,7 +5187,7 @@
         <dia:point val="48.4682,3.65847"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="43.0829,2.90847;48.5182,14.9733"/>
+        <dia:rectangle val="43.0829,2.91847;48.5182,14.9733"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>

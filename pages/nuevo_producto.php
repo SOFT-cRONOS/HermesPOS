@@ -530,6 +530,8 @@ $conn->close();
                                 </div>
                                 </div>
                                 <!--/card-->
+                                <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
+                                <!-- ver mas en https://getbootstrap.com/docs/4.0/components/buttons/ -->
                             </div>
                         </div>
                     <!-- Fin Formulario Nuevo Producto -->                       

@@ -18,6 +18,8 @@ $datos = verificar_init();
 
 //obtengo los productos
 $result = getProductos($conn);
+//obtengo categorias
+$categorias = getCategorias($conn);
 
 // Cerrar la conexión
 $conn->close();
@@ -48,6 +50,9 @@ $conn->close();
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom styles para formulario nuevo producto -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
@@ -130,11 +135,11 @@ $conn->close();
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- subtitulo <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="productos.php">Lista de Productos</a>
-                        <a class="collapse-item" href="nuevo_producto.php">Nuevo Producto</a>
-                        <a class="collapse-item" href="cards.html">Descuentos</a>
-                        <a class="collapse-item" href="cards.html">Historial de Inventario</a>
-                        <a class="collapse-item" href="cards.html">Categorias</a>
+                        <a class="collapse-item" href="pages/productos.php">Lista de Productos</a>
+                        <a class="collapse-item" href="pages/cards.html">Nuevo Producto</a>
+                        <a class="collapse-item" href="pages/cards.html">Descuentos</a>
+                        <a class="collapse-item" href="pages/cards.html">Historial de Inventario</a>
+                        <a class="collapse-item" href="pages/cards.html">Categorias</a>
                     </div>
                 </div>
             </li>
@@ -402,7 +407,132 @@ $conn->close();
                                 </table>
                             </div>
                         </div>
-                    </div>
+
+                        </div>
+                        <!-- test combobox -->
+                        <div class="container mt-5">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <form method="post">
+                                        <label for="cmbOpciones">Selecciona una categoría:</label>
+                                        <select class="form-control" id="cmbOpciones" name="cmbOpciones">
+                                            <?php 
+                                                foreach ($categorias as $id => $nombre) {
+                                                    echo "<option> $nombre </option>";
+                                                } 
+                                            ?>
+                                        </select>
+                                        <br>
+                                        <input type="submit" class="btn btn-primary" value="Guardar">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- Formulario Nuevo Producto -->  
+                         <!-- aporte de https://codepen.io/Thumper/pen/gGBXZO -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 offset-md-1">
+                                <span class="anchor" id="formComplex"></span>
+                                <hr class="my-5">
+                                
+                                <div class="card card-outline-secondary">
+                                <div class="card-header">
+                                    <h3 class="mb-0">Cargando un nuevo artiuclo</h3>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Contenido formulario -->
+                                    <div class="row mt-4">
+                                        <!-- Inicio controles -->
+                                        <div class="col-sm-5 pb-3">
+                                            <label for="exampleAccount">Codigo</label> 
+                                               <input class="form-control" id="exampleAccount" placeholder="XXXXX" type="text">
+                                               <a class="btn btn-primary" href="Lector_codigo_barras/test.html" role="button">Link</a>
+                                        </div>
+                                        <div class="col-sm-3 pb-3">
+                                            <label for="exampleCtrl">Control #</label> 
+                                               <input class="form-control" id="exampleCtrl" placeholder="0000" type="text">
+                                        </div>
+                                        <div class="col-sm-4 pb-3">
+                                            <label for="exampleAmount">Amount</label>
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                                                $
+                                            </div>
+                                                                    <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 pb-3">
+                                            <label for="exampleFirst">First Name</label> 
+                                                                <input class="form-control" id="exampleFirst" type="text">
+                                        </div>
+                                        <div class="col-sm-6 pb-3">
+                                            <label for="exampleLast">Last Name</label> 
+                                                                <input class="form-control" id="exampleLast" type="text">
+                                        </div>
+                                        <div class="col-sm-6 pb-3">
+                                            <label for="exampleCity">City</label> <input class="form-control" id="exampleCity" type="text">
+                                        </div>
+                                        <div class="col-sm-3 pb-3">
+                                            <!-- combobox  -->
+                                            <label for="exampleSt">State</label> 
+                                            <select class="form-control custom-select" id="exampleSt">
+                                                
+                                                <option class="text-white bg-warning">
+                                                    Pick a state
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3 pb-3">
+                                            <label for="exampleZip">Postal Code</label> 
+                                                                <input class="form-control" id="exampleZip" type="text">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="exampleAccount">Preferred Color (radio buttons)</label>
+                                            <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                                        <input autocomplete="off" checked id="blue" name="options" type="radio">
+                                                                            Blue
+                                                                    </label> 
+                                                                    <label class="btn btn-secondary">
+                                                                        <input autocomplete="off" id="red" name="options" type="radio">
+                                                                            Red
+                                                                    </label> 
+                                                                    <label class="btn btn-secondary">
+                                                                        <input autocomplete="off" id="green" name="options" type="radio">
+                                                                            Green
+                                                                    </label> 
+                                                                    <label class="btn btn-secondary">
+                                                                        <input autocomplete="off" id="yellow" name="options" type="radio">
+                                                                            Yellow
+                                                                    </label> 
+                                                                    <label class="btn btn-secondary">
+                                                                        <input autocomplete="off" id="black" name="options" type="radio">
+                                                                            Black
+                                                                    </label> 
+                                                                    <label class="btn btn-secondary active">
+                                                                        <input autocomplete="off" id="orange" name="options" type="radio"> 
+                                                                            Orange
+                                                                    </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="exampleMessage">Message</label> 
+                                            <textarea class="form-control" id="complexExampleMessage" rows="3"></textarea> 
+                                                                    <small class="text-muted">Add any notes here.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="float-right">
+                                    <input class="btn btn-secondary" type="reset" value="Cancel"> 
+                                                        <input class="btn btn-primary" type="button" value="Send">
+                                    </div>
+                                </div>
+                                </div>
+                                <!--/card-->
+                            </div>
+                        </div>
+                    <!-- Fin Formulario Nuevo Producto -->                       
 
                 </div>
                 <!-- /.container-fluid -->

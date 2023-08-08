@@ -83,8 +83,10 @@ function verificar_usuario($username, $password) { //seguridad de login
 }
 
 function verificar_init(){ //da los datos de usuario o manda al login
-    // Iniciar la sesión para acceder a las variables de sesión
-    session_start();
+    // Si no se inicio, Iniciar la sesión para acceder a las variables de sesión
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     // Si el usuario no ha iniciado sesión, redirigir al login
     if (!isset($_COOKIE['login_data']) && !isset($_SESSION['username'])) {

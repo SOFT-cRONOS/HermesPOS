@@ -61,7 +61,8 @@ CREATE TABLE categoria (
 
 INSERT INTO categoria (nombre, detalle, estado)
 VALUES ('varios', 'productos varios',0);
-
+INSERT INTO categoria (nombre, detalle, estado)
+VALUES ('insumos', 'Insumos de impresion, manualidades y mas',0);
 
 CREATE TABLE articulo (
     idarticulo INT AUTO_INCREMENT PRIMARY KEY,

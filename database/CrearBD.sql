@@ -2,6 +2,7 @@ CREATE USER 'admin'@'localhost' IDENTIFIED BY 'Cronos71@';
 CREATE DATABASE hermespos;
 GRANT ALL PRIVILEGES ON hermespos.* TO 'admin'@'localhost';
 
+USE hermespos;
 
 CREATE TABLE rol (
     idrol INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,38 +64,32 @@ INSERT INTO categoria (nombre, detalle, estado)
 VALUES ('varios', 'productos varios',0);
 INSERT INTO categoria (nombre, detalle, estado)
 VALUES ('insumos', 'Insumos de impresion, manualidades y mas',0);
+INSERT INTO categoria (nombre, detalle, estado)
+VALUES ('vinilo', 'vinilos de corte, estampado',0);
 
-CREATE TABLE articulo (
+
+CREATE TABLE clase_articulo (
     idarticulo INT AUTO_INCREMENT PRIMARY KEY,
     idcategoria INT,
     codigo VARCHAR(50),
     nombre VARCHAR(100),
-    precio_venta DECIMAL(11,2),
-    precio_compra DECIMAL(11,2),
-    ganancia INT,
     stock INT,
     descripcion VARCHAR(255),
-    imagen VARCHAR(20),
     estado BIT,
-    compuesto BOOLEAN,
+    margena BOOLEAN,
     FOREIGN KEY (idcategoria) REFERENCES categoria(idcategoria)
 );
 
-INSERT INTO articulo (idcategoria, codigo, nombre, precio_venta, precio_compra, ganancia, stock, descripcion, imagen, estado, compuesto)
-VALUES (1, '0101', 'Prueba', 200, 100, 100, 1, 'producto de prueba', 'prueba.jpg',0, 0);
+INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, estado)
+VALUES (1, '0101', 'Prueba', 200, 'producto de prueba',0);
 
-CREATE TABLE articulos_compuestos (
-    idarticulo INT,
-    idcomponente INT,
-    cantidad INT,
-    INDEX idarticulo_index (idarticulo),
-    FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo),
-    FOREIGN KEY (idcomponente) REFERENCES articulo(idarticulo)
-);
+INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, estado)
+VALUES (2, '0101', 'Vinilo 651', 3, 'Vinilo Corte oracal', 0);
 
-CREATE TABLE variante_producto (
+
+CREATE TABLE variante_articulo (
     id_variante INT AUTO_INCREMENT PRIMARY KEY,
-    id_producto INT,
+    idarticulo INT,
     codigo INT,
     nombre varchar(100),
     precio_venta DECIMAL(11,2),
@@ -102,9 +97,24 @@ CREATE TABLE variante_producto (
     ganancia INT,
     stock INT,
     descripcion VARCHAR(255),
-    imagen VARCHAR(20),
+    imagen VARCHAR(255),
     estado BIT,
-    FOREIGN KEY (id_producto) REFERENCES articulo(idarticulo)
+    compuesto BIT,
+    FOREIGN KEY (id_articulo) REFERENCES clase_articulo(idarticulo)
+);
+
+INSERT INTO variante_articulo (id_articulo, codigo, nombre, precio_compra, precio_venta, ganancia, stock, descripcion, imagen, compuesto)
+VALUES (1, '01012', '651 rojo', 400, 500, 10, 2, 'vinilo color rojo', 'https://d2r9epyceweg5n.cloudfront.net/stores/093/039/products/367-011-32ca22a9eadc5a027e15126313793897-480-0.jpg',0);
+
+
+
+CREATE TABLE articulos_compuestos (
+    idarticulo INT,
+    idcomponente INT,
+    cantidad INT,
+    INDEX idarticulo_index (idarticulo),
+    FOREIGN KEY (idarticulo) REFERENCES variante_articulo(id_variante),
+    FOREIGN KEY (idcomponente) REFERENCES variante_articulo(id_variante)
 );
 
 
@@ -142,7 +152,7 @@ CREATE TABLE detalle_ingreso (
     link VARCHAR(255),
     precio DECIMAL(11,2),
     FOREIGN KEY (idingreso) REFERENCES ingreso(idingreso),
-    FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo)
+    FOREIGN KEY (idarticulo) REFERENCES variante_articulo(id_variante)
 );
 
 CREATE TABLE cliente (
@@ -154,6 +164,9 @@ CREATE TABLE cliente (
     email VARCHAR(50) UNIQUE,
     empresa VARCHAR(30)
 );
+
+INSERT INTO cliente (nombre, documento, direccion, telefono, email, empresa)
+VALUES ('Tester', '213123', 'barrio test 321', '23123123','test.teste@gmail.com', 'la tester')
 
 CREATE TABLE tipo_pago (
     idtipopago INT AUTO_INCREMENT PRIMARY KEY,
@@ -193,17 +206,16 @@ VALUES (1,NULL, '2023/08/07', '200', '10000', 1, 'pendiente', 'parcial');
 
 CREATE TABLE detalle_transaccion (
     idventa INT,
-    idarticulo INT,
     id_variante INT,
     cantidad INT,
     precio decimal(11,2),
     descuento decimal(11,2),
     FOREIGN KEY (idventa) REFERENCES transaccion(idtransaccion),
-    FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo)
+    FOREIGN KEY (id_variante) REFERENCES variante_articulo(id_variante)
 );
 
-INSERT INTO detalle_transaccion (idventa, idarticulo, id_variante, cantidad, precio, descuento)
-VALUES (4, 1, NULL, 5, 200,0);
+INSERT INTO detalle_transaccion (idventa, id_variante, cantidad, precio, descuento)
+VALUES (3, 1, 1, 200,0);
 
 
 CREATE TABLE pagos (

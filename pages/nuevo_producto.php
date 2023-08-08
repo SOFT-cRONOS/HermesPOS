@@ -360,74 +360,6 @@ $conn->close();
                     <h1 class="h3 mb-2 text-gray-800">Mis productos</h1>
                     <p class="mb-4">Listado de todos los productos ingresados <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
-
-                    <!-- DataTales (tabla de Productos) -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>categoria</th>
-                                            <th>Codigo</th>
-                                            <th>Producto</th>
-                                            <th>Precio Compra</th>
-                                            <th>Precio Venta</th>
-                                            <th>Stock</th>
-                                            <th>Ganancia</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>categoria</th>
-                                            <th>Codigo</th>
-                                            <th>Producto</th>
-                                            <th>Precio Compra</th>
-                                            <th>Precio Venta</th>
-                                            <th>Stock</th>
-                                            <th>Ganancia</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($result as $row) { ?>
-                                        <tr>
-                                            <td><?php echo $row['nombre_categoria']; ?></td>
-                                            <td><?php echo $row['codigo']; ?></td>
-                                            <td><?php echo $row['nombre']; ?></td>
-                                            <td><?php echo "$" . number_format($row['precio_compra'], 2, '.', ','); ?></td>
-                                            <td><?php echo "$" . number_format($row['precio_venta'], 2, '.', ','); ?></td>
-                                            <td><?php echo $row['stock']; ?></td>
-                                            <td><?php echo $row['ganancia']; ?></td>
-                                        </tr>
-                                        <?php } ?>                                     
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        </div>
-                        <!-- test combobox -->
-                        <div class="container mt-5">
-                            <div class="row">
-                                <div class="col-md-6 offset-md-3">
-                                    <form method="post">
-                                        <label for="cmbOpciones">Selecciona una categoría:</label>
-                                        <select class="form-control" id="cmbOpciones" name="cmbOpciones">
-                                            <?php 
-                                                foreach ($categorias as $id => $nombre) {
-                                                    echo "<option> $nombre </option>";
-                                                } 
-                                            ?>
-                                        </select>
-                                        <br>
-                                        <input type="submit" class="btn btn-primary" value="Guardar">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     <!-- Formulario Nuevo Producto -->  
                          <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
                         <!-- ver mas en https://getbootstrap.com/docs/4.0/components/buttons/ -->
@@ -510,33 +442,41 @@ $conn->close();
                                     <div class="col-sm-2 pb-3">
                                         <label for="exampleAmount">Stock</label>
                                         <div class="input-group">
-                                        <div class="input-group-addon">m2</div>
+                                            <div class="input-group-addon">m2</div>
                                             <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
                                         </div>
                                     </div>
+                                    <div class="col-sm-4 pb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Producto con variantes
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <!-- segunda fila -->
-                                <div class="row mt-4">
+                                <div class="row mt-4" >
                                     <div class="card border-light mb-4">
-                                        <p>                                                                                          <!-- agruegar disabled a la clase para deshabilitar-->
+                                        <p> 
+                                            <!-- agruegar disabled a la clase para deshabilitar-->
                                             <a class="btn btn-primary " aria-disabled="false" data-toggle="collapse" href="#collapseExample" role="button"  aria-expanded="false" aria-controls="collapseExample" >
                                                 Configurar Variantes
                                             </a>
-                                            caca
                                         </p>
                                         
                                         <!-- Menu desplegable de variantes -->
                                         <div class="collapse" id="collapseExample">
                                             <div class="card card-body">
                                                 <?php 
-                                                //incorporacion de block nueva variante prodcutos
-                                                    include "blocks/block-productos.php";
+                                                //incorporacion de block nueva variante articulo
+                                                    include "blocks/block-NewVaArticulo.php";
                                                 ?>
                                             </div>
                                         </div>
                                         <!-- FinMenu desplegable de variantes -->
                                     </div>
-
                                 </div>
                                     <!-- tercer fila -->
                                 <div class="row mt-4">
@@ -544,7 +484,7 @@ $conn->close();
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
-                                                Default checkbox
+                                                Producto Compuesto
                                             </label>
                                         </div>                                       
                                     </div>

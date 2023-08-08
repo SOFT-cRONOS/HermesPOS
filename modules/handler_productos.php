@@ -1,9 +1,24 @@
 <?php
 function getProductos($conn){
     // Consulta SQL para obtener los datos de la tabla articulo
-    $sql = "SELECT a.idcategoria, a.codigo, a.nombre, a.precio_compra, a.precio_venta, a.ganancia, a.stock, c.nombre AS nombre_categoria 
-            FROM articulo a
-            INNER JOIN categoria c ON a.idcategoria = c.idcategoria";
+    $sql = "SELECT 
+                ca.nombre AS nombre_categoria,
+                va.codigo AS codigo,
+                cl.nombre AS producto,
+                va.nombre AS nombre,
+                va.descripcion AS detalle,
+                va.precio_venta,
+                va.precio_compra,
+                va.ganancia,
+                va.stock,
+                va.imagen
+            FROM
+                variante_articulo va
+            INNER JOIN
+                clase_articulo cl ON va.idarticulo = cl.idarticulo
+            INNER JOIN
+                categoria ca ON cl.idcategoria = ca.idcategoria";
+                
     // Ejecutar la consulta
     $result = $conn->query($sql);
 
@@ -59,7 +74,6 @@ function addStock($conn){
 function descStock($conn){
     echo '';
 }
-
 
 
 ?>

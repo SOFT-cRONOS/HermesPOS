@@ -369,10 +369,12 @@ $conn->close();
                                             <th>categoria</th>
                                             <th>Codigo</th>
                                             <th>Producto</th>
+                                            <th>detalle</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
-                                            <th>Stock</th>
                                             <th>Ganancia</th>
+                                            <th>Stock</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -380,10 +382,12 @@ $conn->close();
                                             <th>categoria</th>
                                             <th>Codigo</th>
                                             <th>Producto</th>
+                                            <th>detalle</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
-                                            <th>Stock</th>
                                             <th>Ganancia</th>
+                                            <th>Stock</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -391,11 +395,13 @@ $conn->close();
                                         <tr>
                                             <td><?php echo $row['nombre_categoria']; ?></td>
                                             <td><?php echo $row['codigo']; ?></td>
+                                            <td><?php echo $row['producto']; ?></td>
                                             <td><?php echo $row['nombre']; ?></td>
                                             <td><?php echo "$" . number_format($row['precio_compra'], 2, '.', ','); ?></td>
                                             <td><?php echo "$" . number_format($row['precio_venta'], 2, '.', ','); ?></td>
-                                            <td><?php echo $row['stock']; ?></td>
                                             <td><?php echo $row['ganancia']; ?></td>
+                                            <td><?php echo $row['stock']; ?></td>
+                                            <td><img src=<?php echo $row['imagen']; ?> width="50"></td>
                                         </tr>
                                         <?php } ?>                                     
                                     </tbody>

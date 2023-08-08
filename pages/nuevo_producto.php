@@ -518,12 +518,13 @@ $conn->close();
                                 <!-- segunda fila -->
                                 <div class="row mt-4">
                                     <div class="card border-light mb-4">
-                                        <p>
-                                            <!-- agruegar disabled a la clase para deshabilitar-->
+                                        <p>                                                                                          <!-- agruegar disabled a la clase para deshabilitar-->
                                             <a class="btn btn-primary " aria-disabled="false" data-toggle="collapse" href="#collapseExample" role="button"  aria-expanded="false" aria-controls="collapseExample" >
                                                 Configurar Variantes
                                             </a>
+                                            caca
                                         </p>
+                                        
                                         <!-- Menu desplegable de variantes -->
                                         <div class="collapse" id="collapseExample">
                                             <div class="card card-body">
@@ -535,6 +536,7 @@ $conn->close();
                                         </div>
                                         <!-- FinMenu desplegable de variantes -->
                                     </div>
+
                                 </div>
                                     <!-- tercer fila -->
                                 <div class="row mt-4">

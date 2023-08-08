@@ -429,111 +429,133 @@ $conn->close();
                             </div>
                         </div>
                     <!-- Formulario Nuevo Producto -->  
-                         <!-- aporte de https://codepen.io/Thumper/pen/gGBXZO -->
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 offset-md-1">
-                                <span class="anchor" id="formComplex"></span>
-                                <hr class="my-5">
-                                
-                                <div class="card card-outline-secondary">
-                                <div class="card-header">
-                                    <h3 class="mb-0">Cargando un nuevo artiuclo</h3>
-                                </div>
-                                <div class="card-body">
-                                    <!-- Contenido formulario -->
-                                    <div class="row mt-4">
-                                        <!-- Inicio controles -->
-                                        <div class="col-sm-5 pb-3">
-                                            <label for="exampleAccount">Codigo</label> 
-                                               <input class="form-control" id="exampleAccount" placeholder="XXXXX" type="text">
-                                               <a class="btn btn-primary" href="Lector_codigo_barras/test.html" role="button">Link</a>
+                         <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
+                        <!-- ver mas en https://getbootstrap.com/docs/4.0/components/buttons/ -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header">
+                                <h3 class="mb-0">Cargando un nuevo artiuclo</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Contenido formulario -->
+                                <div class="row mt-4">
+                                    <!-- Inicio controles -->
+                                    <div class="col-sm-3 pb-3">
+                                        <label for="exampleAccount">Codigo</label> 
+                                        <input class="form-control" id="exampleAccount" placeholder="XXXXX" type="text">
+                                        <a class="btn btn-primary btn-sm" href="Lector_codigo_barras/test.html" role="button" style="margin-top:3px">Escanear</a>
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <!-- -->
+                                        <!-- combobox  -->                                        
+                                        <label for="exampleSt">Categoria</label> 
+                                        <select class="form-control custom-select" id="exampleSt">
+                                            <option class="text-white bg-warning">
+                                                Pick a state
+                                            </option>
+                                            <?php 
+                                                foreach ($categorias as $id => $nombre) {
+                                                    echo "<option> $nombre </option>";
+                                                } 
+                                            ?>
+                                        </select>
+                                        <!-- -->
+                                    </div>
+                                    <div class="col-sm-3 pb-3">
+                                        <label for="exampleFirst">Nombre</label> 
+                                        <input class="form-control" id="exampleFirst" type="text">
+                                        <small class="text-muted">Texto 0/100%.</small>
+                                    </div>
+                                    <div class="col-sm-4 pb-3">
+                                        <label for="exampleLast">Descripcion</label> 
+                                        <input class="form-control" id="exampleLast" type="text">
+                                        <small class="text-muted">Texto 0/100%</small>
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <label for="exampleAmount">Precio Compra</label>
+                                        <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                            <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
                                         </div>
-                                        <div class="col-sm-3 pb-3">
-                                            <label for="exampleCtrl">Control #</label> 
-                                               <input class="form-control" id="exampleCtrl" placeholder="0000" type="text">
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <label for="exampleAmount">Precio Venta</label>
+                                        <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                            <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
                                         </div>
-                                        <div class="col-sm-4 pb-3">
-                                            <label for="exampleAmount">Amount</label>
-                                            <div class="input-group">
-                                            <div class="input-group-addon">
-                                                $
-                                            </div>
-                                                                    <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
-                                            </div>
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <label for="exampleAmount">Ganancia</label>
+                                        <div class="input-group">
+                                        <div class="input-group-addon">%</div>
+                                            <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
                                         </div>
-                                        <div class="col-sm-6 pb-3">
-                                            <label for="exampleFirst">First Name</label> 
-                                                                <input class="form-control" id="exampleFirst" type="text">
-                                        </div>
-                                        <div class="col-sm-6 pb-3">
-                                            <label for="exampleLast">Last Name</label> 
-                                                                <input class="form-control" id="exampleLast" type="text">
-                                        </div>
-                                        <div class="col-sm-6 pb-3">
-                                            <label for="exampleCity">City</label> <input class="form-control" id="exampleCity" type="text">
-                                        </div>
-                                        <div class="col-sm-3 pb-3">
-                                            <!-- combobox  -->
-                                            <label for="exampleSt">State</label> 
-                                            <select class="form-control custom-select" id="exampleSt">
-                                                
-                                                <option class="text-white bg-warning">
-                                                    Pick a state
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3 pb-3">
-                                            <label for="exampleZip">Postal Code</label> 
-                                                                <input class="form-control" id="exampleZip" type="text">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="exampleAccount">Preferred Color (radio buttons)</label>
-                                            <div class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-secondary">
-                                                                        <input autocomplete="off" checked id="blue" name="options" type="radio">
-                                                                            Blue
-                                                                    </label> 
-                                                                    <label class="btn btn-secondary">
-                                                                        <input autocomplete="off" id="red" name="options" type="radio">
-                                                                            Red
-                                                                    </label> 
-                                                                    <label class="btn btn-secondary">
-                                                                        <input autocomplete="off" id="green" name="options" type="radio">
-                                                                            Green
-                                                                    </label> 
-                                                                    <label class="btn btn-secondary">
-                                                                        <input autocomplete="off" id="yellow" name="options" type="radio">
-                                                                            Yellow
-                                                                    </label> 
-                                                                    <label class="btn btn-secondary">
-                                                                        <input autocomplete="off" id="black" name="options" type="radio">
-                                                                            Black
-                                                                    </label> 
-                                                                    <label class="btn btn-secondary active">
-                                                                        <input autocomplete="off" id="orange" name="options" type="radio"> 
-                                                                            Orange
-                                                                    </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="exampleMessage">Message</label> 
-                                            <textarea class="form-control" id="complexExampleMessage" rows="3"></textarea> 
-                                                                    <small class="text-muted">Add any notes here.</small>
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <!-- -->
+                                        <!-- combobox  -->                                        
+                                        <label for="exampleSt">Unidad Medida</label> 
+                                        <select class="form-control custom-select" id="exampleSt">
+                                            <option class="text-white bg-warning">
+                                                Pick a state
+                                            </option>
+                                            <?php 
+                                                foreach ($categorias as $id => $nombre) {
+                                                    echo "<option> $nombre </option>";
+                                                } 
+                                            ?>
+                                        </select>
+                                        <!-- -->
+                                    </div>
+                                    <div class="col-sm-2 pb-3">
+                                        <label for="exampleAmount">Stock</label>
+                                        <div class="input-group">
+                                        <div class="input-group-addon">m2</div>
+                                            <input class="form-control" id="exampleAmount" placeholder="Amount" type="number">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer">
-                                    <div class="float-right">
-                                    <input class="btn btn-secondary" type="reset" value="Cancel"> 
-                                                        <input class="btn btn-primary" type="button" value="Send">
+                                <!-- segunda fila -->
+                                <div class="row mt-4">
+                                    <div class="card border-light mb-4">
+                                        <p>
+                                            <!-- agruegar disabled a la clase para deshabilitar-->
+                                            <a class="btn btn-primary " aria-disabled="false" data-toggle="collapse" href="#collapseExample" role="button"  aria-expanded="false" aria-controls="collapseExample" >
+                                                Configurar Variantes
+                                            </a>
+                                        </p>
+                                        <!-- Menu desplegable de variantes -->
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <?php 
+                                                //incorporacion de block nueva variante prodcutos
+                                                    include "blocks/block-productos.php";
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <!-- FinMenu desplegable de variantes -->
                                     </div>
                                 </div>
+                                    <!-- tercer fila -->
+                                <div class="row mt-4">
+                                    <div class="col-sm-4 pb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
+                                        </div>                                       
+                                    </div>
                                 </div>
-                                <!--/card-->
-                                <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
-                                <!-- ver mas en https://getbootstrap.com/docs/4.0/components/buttons/ -->
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                <input class="btn btn-secondary" type="reset" value="Cancel"> 
+                                                    <input class="btn btn-primary" type="button" value="Send">
+                                </div>
                             </div>
                         </div>
+                        <!--/card-->
                     <!-- Fin Formulario Nuevo Producto -->                       
 
                 </div>

@@ -59,6 +59,9 @@ function addStock($conn){
 function descStock($conn){
     echo '';
 }
+
+
+
 ?>
 
 

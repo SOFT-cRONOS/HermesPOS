@@ -2,8 +2,8 @@
 
 ## Hermes punto de venta
 
-    Sistema con finalidad para puntos de ventas genericos, multiuso.
-    Completamente gratis pero con la finalidad de poder comercializar su puesta a punto.
+Sistema con finalidad para puntos de ventas genericos, multiuso.
+Completamente gratis pero con la finalidad de poder comercializar su puesta a punto.
 
 ## Funciones del software
 

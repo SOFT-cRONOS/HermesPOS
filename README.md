@@ -1,16 +1,18 @@
-# HermesPOS
-Hermes punto de venta
+# Proyecto HermesPOS
 
-Sistema con finalidad para puntos de ventas genericos, multiuso.
-Completamente gratis pero con la finalidad de poder comercializar su puesta a punto.
+## Hermes punto de venta
 
-Funciones del software
-    Login
+    Sistema con finalidad para puntos de ventas genericos, multiuso.
+    Completamente gratis pero con la finalidad de poder comercializar su puesta a punto.
+
+## Funciones del software
+
+    **Login**
         -Login con usuario y contraseña
         -Recuperar contraseña
         -Solicitar registro
 
-    Punto de venta
+    **Punto de venta**
         -Vender
             -Nueva orden
             -Nueva transaccion (Presupuesto, Pedido, Venta)
@@ -23,7 +25,7 @@ Funciones del software
             -Reportes
             -Sistema de puntos (A futuro)
 
-    Articulos
+    **Articulos**
         -Listado de productos
             -Recuento de inventario
             -Control de precios compra
@@ -39,7 +41,7 @@ Funciones del software
             -Proveedores
         -Categorias
       
-    Configuracion
+    **Configuracion**
         -Usuarios
             -Nuevo Usuario
             -Usuarios conectados
@@ -54,12 +56,27 @@ Funciones del software
             -Metodos de pago
             -Pantalla pedidos(a futuro)
 
-Datos ingreso
+## Estructura de archivos 
+    proyecto
+    │ README.md
+    │ index.php 
+    ├── Admin (logeo y configuracion)
+    │   ├── conect.php
+    │   ├── logout.php
+    │   └── troubleshooting.md
+    │
+    ├── css (estilos propios)
+    ├── database (configuracion de BD)
+    │   ├──crearBD.sql
+    │   ├──doagramabd.dia  
+    ├──modules(funciones de control)
+    ├──pages(paginas de la UI)
+    │   ├──blocks(bloques html reutilizbles)
+    │   ├──clientes.php
+    │   ├──productos.php
+    **Etc..**
+## Datos ingreso
 
-    PhpMyAdmin
-        usuario: hermespos
-        pass: Cronos71@
-    
     Administrador
         usuario: admin
         pass: hermespos

@@ -35,7 +35,6 @@ function verificar_usuario($username, $password) { //seguridad de login
         // Iniciar sesión para guardar el nombre de usuario
         session_start();
         $_SESSION['username'] = $username;
-
         //Busco el nombre completo del usuario
         $sql = "SELECT nombre FROM usuario WHERE nick = '$username'";
         $result = $conn->query($sql);
@@ -106,6 +105,57 @@ function verificar_init(){ //da los datos de usuario o manda al login
         //$nombre_completo = $datos['UserDataName'];
         //$username = $_SESSION['username'];
     }
+}
+
+function verificar_usuario_modopro($username, $password) {
+    $conn = connect_sql();
+    
+    // Utilizar sentencia preparada para evitar inyección SQL
+    $sql = "SELECT * FROM usuario WHERE nick = ? LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    // Verificar si el usuario existe
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        $stored_password_hash = $row['contrasena'];
+        
+        // Verificar la contraseña usando password_verify
+        if (password_verify($password, $stored_password_hash)) {
+            session_start();
+            $_SESSION['username'] = $username;
+
+            // Escapar y limpiar el nombre completo
+            $nombre_completo = htmlspecialchars($row["nombre"], ENT_QUOTES, 'UTF-8');
+
+            // Crear cookie con datos cifrados
+            $datos = array(
+                'UserName_init' => $username,
+                'UserDataName' => $nombre_completo
+            );
+            $datos_json = json_encode($datos);
+            $expiracion = time() + (86400 * 30); // la cookie expirará en 30 días
+            setcookie("login_data", $datos_json, $expiracion, "/", NULL, TRUE, TRUE);
+
+            // Redirigir a la página home
+            header("Location: ../index.php");
+            exit;
+        } else {
+            // Contraseña incorrecta, redirigir con mensaje de error
+            header("Location: login.php?error=invalid&username=". urlencode($username));
+            exit;
+        }
+    } else {
+        // Usuario no encontrado, redirigir con mensaje de error
+        header("Location: login.php?error=invalid&username=". urlencode($username));
+        exit;
+    }
+
+    // Cerrar conexión a la base de datos
+    $stmt->close();
+    $conn->close();
 }
 
 ?>

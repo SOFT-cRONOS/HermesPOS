@@ -82,7 +82,7 @@ CREATE TABLE clase_articulo (
 );
 
 INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, um, estado)
-VALUES (1, '0101', 'Prueba', 200, 'producto de prueba',0);
+VALUES (1, '0101', 'Prueba', 200, 'producto de prueba','m2',0);
 
 INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, estado)
 VALUES (2, '0101', 'Vinilo 651', 3, 'Vinilo Corte oracal', 0);
@@ -101,10 +101,10 @@ CREATE TABLE variante_articulo (
     imagen VARCHAR(255),
     estado BIT,
     compuesto BIT,
-    FOREIGN KEY (id_articulo) REFERENCES clase_articulo(idarticulo)
+    FOREIGN KEY (idarticulo) REFERENCES clase_articulo(idarticulo)
 );
 
-INSERT INTO variante_articulo (id_articulo, codigo, nombre, precio_compra, precio_venta, ganancia, stock, descripcion, imagen, compuesto)
+INSERT INTO variante_articulo (idarticulo, codigo, nombre, precio_compra, precio_venta, ganancia, stock, descripcion, imagen, compuesto)
 VALUES (1, '01012', '651 rojo', 400, 500, 10, 2, 'vinilo color rojo', 'https://d2r9epyceweg5n.cloudfront.net/stores/093/039/products/367-011-32ca22a9eadc5a027e15126313793897-480-0.jpg',0);
 
 
@@ -167,7 +167,7 @@ CREATE TABLE cliente (
 );
 
 INSERT INTO cliente (nombre, documento, direccion, telefono, email, empresa)
-VALUES ('Tester', '213123', 'barrio test 321', '23123123','test.teste@gmail.com', 'la tester')
+VALUES ('Tester', '213123', 'barrio test 321', '23123123','test.teste@gmail.com', 'la tester');
 
 CREATE TABLE tipo_pago (
     idtipopago INT AUTO_INCREMENT PRIMARY KEY,

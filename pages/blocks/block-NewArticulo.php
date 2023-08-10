@@ -11,7 +11,9 @@
 
     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
+        <form action="../modules/handler_productos.php" method="POST">
         <!-- Form con POST -->
+        
             <!-- Primer fila -->
             <div class="row mt-4">                                 
                 <div class="col-sm-3 pb-3">
@@ -76,7 +78,7 @@
                     <!-- -->
                     <!-- combobox  -->                                        
                     <label for="um">Forma de venta</label> 
-                    <select class="form-control custom-select" id="um" onchange="updateAddonText()">
+                    <select class="form-control custom-select" id="um" name="um" onchange="updateAddonText()">
                         <option class="text-white bg-warning">
                             unidad
                         </option>
@@ -89,10 +91,10 @@
                     <!-- -->
                 </div>
                 <div class="col-sm-2 pb-3">
-                    <label for="exampleAmount">Stock</label>
+                    <label for="stock">Stock</label>
                     <div class="input-group">
                         <div id="addonText" class="input-group-addon">m2</div>
-                        <input class="form-control" id="exampleAmount" placeholder="0" type="number">
+                        <input class="form-control" id="stock" name="stock" placeholder="0" type="number">
                     </div>
                 </div>
             </div>
@@ -102,10 +104,11 @@
                     <input class="btn btn-secondary btn-block" type="reset" value="Cancelar"> 
                 </div>
                 <div class="col-sm-2">
-                    <input class="btn btn-primary btn-block" type="button" name="addArtiucloSimple" value="Guardar">
+                    <input class="btn btn-primary btn-block" type="submit" name="addArtiucloSimple" value="Guardar">
                 </div>
             </div>
         <!-- Fin Form -->
+        </form>
         </div>
     </div>
   </div>

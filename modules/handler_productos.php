@@ -179,6 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["addArtiucloSimple"]))
     $descripcion = $_POST["descripcion"]; 
     $um = $_POST["um"]; 
     $estado = $_POST["estado"]; 
+    $stock = 0; 
 
 
     //articulo

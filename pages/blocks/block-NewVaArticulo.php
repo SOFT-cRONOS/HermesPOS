@@ -43,5 +43,14 @@
         </div>
     </div>
 </div>
+<!-- Botones guardar -->
+<div class="row mb-4 justify-content-end"> 
+    <div class="col-sm-2">
+        <input class="btn btn-secondary btn-block" type="reset" value="Cancelar"> 
+    </div>
+    <div class="col-sm-2">
+        <input class="btn btn-primary btn-block" type="button" value="Guardar">
+    </div>
+</div>
 <!-- Divider -->
 <hr class="sidebar-divider my-0">

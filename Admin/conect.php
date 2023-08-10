@@ -20,6 +20,26 @@ function connect_sql() { //conexion a sql
     }
 }
 
+function connect_sql_pdo() {
+    // Establecer la conexión a la base de datos utilizando PDO
+    $servername = "localhost";
+    $dbname = "hermespos";
+    $username = "admin";
+    $password = "Cronos71@";
+
+    $dsn = "mysql:host=$servername;dbname=$dbname;charset=utf8mb4";
+
+
+    try {
+        $pdo = new PDO($dsn, $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    } catch (PDOException $e) {
+        return  "Error de conexión: " . $e->getMessage();
+        exit;
+    }
+}
+
 function verificar_usuario($username, $password) { //seguridad de login
     
     $conn = connect_sql();

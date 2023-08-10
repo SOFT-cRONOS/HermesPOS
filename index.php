@@ -8,7 +8,7 @@
 require_once "Admin/conect.php";
 
 //modulos
-require_once "modules/home.php";
+require_once "modules/handler_home.php";
 require_once "modules/handler_estadisticas.php";
 
 $conn = connect_sql();
@@ -22,10 +22,15 @@ $username = $_SESSION['username'];
 
 
 $valores = init_home($conn);
+//valores para tarjetas
+    //tarjeta "acumulado(este mes)
+    $total_mes_actual = $valores[0];
+    //tarjeta "acumulado hoy"
+    $total_dia_actual = $valores[1];
+    //tarjeta "pedidos terminados %"
+    $pedidos_pendientes = $valores[2];
 
-$total_mes_actual = $valores[0];
-$total_dia_actual = $valores[1];
-$pedidos_pendientes = $valores[2];
+//grafico torta (productos mas vendidos)
 $productos_mas_vendidos = palco_productos($conn);
 
 // Cerrar la conexión

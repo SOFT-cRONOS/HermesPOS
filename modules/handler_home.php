@@ -1,6 +1,7 @@
 <?php
 
-function init_home($conn) { //completa mensajes, graficos y datos de usuario
+function init_home($conn) { 
+    //completa mensajes, graficos y datos de usuario
     //<!-- Modulo constructor datos Home -->
 
     //detras se ejecuta chart-area-demo.js para el grafico lineal

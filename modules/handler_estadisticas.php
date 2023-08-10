@@ -14,6 +14,7 @@
     $result = $conn->query($sql);
 
     if ($result) {
+        $row_count = 0;
         while ($row = $result->fetch_assoc()) {
             $categoria = $row['categoria'];
             $total_ventas = $row['total_ventas'];
@@ -23,6 +24,17 @@
                 'categoria' => $categoria,
                 'total_ventas' => (int)$total_ventas,
             );
+            // Increment the row count
+            $row_count++;
+        }
+
+        // Fill remaining rows with 0 if less than 3 rows
+        while ($row_count < 3) {
+            $productos_mas_vendidos[] = array(
+                'categoria' => '',
+                'total_ventas' => 0,
+            );
+            $row_count++;
         }
 
         // Free the result set

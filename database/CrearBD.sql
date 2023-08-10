@@ -75,12 +75,13 @@ CREATE TABLE clase_articulo (
     nombre VARCHAR(100),
     stock INT,
     descripcion VARCHAR(255),
+    um VARCHAR(10),
     estado BIT,
     margena BOOLEAN,
     FOREIGN KEY (idcategoria) REFERENCES categoria(idcategoria)
 );
 
-INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, estado)
+INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, um, estado)
 VALUES (1, '0101', 'Prueba', 200, 'producto de prueba',0);
 
 INSERT INTO clase_articulo (idcategoria, codigo, nombre, stock, descripcion, estado)

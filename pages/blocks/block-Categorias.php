@@ -1,6 +1,6 @@
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Mis Clientes</h1>
-<p class="mb-4">Listado de compradores . Para mas info ver la documentacion en la seccion <a target="_blank"
+<h1 class="h3 mb-2 text-gray-800">Categorias de Articulos</h1>
+<p class="mb-4">Listado de categorias . Para mas info ver la documentacion en la seccion <a target="_blank"
         href="https://datatables.net">"listado de clientes"</a>.</p>
 
 <!-- DataTales (tabla de Clientes) -->

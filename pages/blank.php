@@ -1,3 +1,29 @@
+
+<!-- Inicio modulo de base de php -->
+<?php
+
+//coneccion y datos de usuario
+require_once "../Admin/conect.php";
+
+//modulos
+require_once "../modules/handler_clientes.php";
+
+
+// Iniciar la sesión para acceder a las variables de sesión
+session_start();
+
+$conn = connect_sql();
+
+$datos = verificar_init();
+
+//obtengo los productos
+$result = getAllclient($conn);
+
+// Cerrar la conexión
+$conn->close();
+?>
+<!--fin consulta productos-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,30 +35,30 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>HermesPOS - Productos</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-</head>
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    </head>
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Comienzo Sidebar - Menu-->
+        <!-- Comienzo Sidebar - Menu-->  
         <?php 
-        //incorporacion del navbar
+            //incorporacion del navbar
             include "blocks/block-SideBar.php";
         ?>
         <!-- End of Sidebar - Fin Sidebar Menu -->
@@ -47,14 +73,11 @@
                 <?php 
                 //incorporacion del navbar
                     include "blocks/block-TopBar.php";
-                ?>
+                ?>         
                 <!-- End of Topbar - Barra superior -->
 
-                <!-- Begin Page Content -C -->
+                <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -66,7 +89,7 @@
             <?php 
             //incorporacion del navbar
                 include "blocks/block-Footer.php";
-            ?>  
+            ?>         
             <!-- End of Footer -->
 
         </div>
@@ -94,7 +117,7 @@
                 <div class="modal-body">Seleccione "Exit" si usted cree que esta listo para cerrar el programa, en caso contrario seleccione "Cancel".</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="Admin/logout.php">Logout</a>
+                    <a class="btn btn-primary" href="../Admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -109,6 +132,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 

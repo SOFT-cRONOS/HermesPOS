@@ -5,29 +5,50 @@
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!--estilos propios-->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    
     <!--contribucion de https://codepen.io/teguh-rijanandi/pen/YzwZMqo-->
     <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
-    <style>
-        /* In order to place the tracking correctly */
-        canvas.drawing, canvas.drawingBuffer {
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-    </style>
+    
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 <body>
-    <!-- Div to show the scanner -->
-    <div id="scanner-container"></div>
-    <div id="resultado"></div>
-    <input type="button" id="btn" value="Start/Stop the scanner" />
+
+    <div class="container">
+        <h1 class= "card-title"> Escaneando...</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="scanner-container">
+                    <!-- El contenido del escáner se inserta aquí -->
+                </div>
+                <div id="resultado"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="progress-bar-container">
+                    <span class="card-text" id="progress-text">0%</span>
+                    <div class="progress">
+                        <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Include the image-diff library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-
+    
     <script>
         var _scannerIsRunning = false;
+
+        var scannedCodes = [];
 
         function startScanner() {
             Quagga.init({
@@ -109,23 +130,68 @@
 
             Quagga.onDetected(function (result) {
                 //da el resultado en consola
-                console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
                 const code = result.codeResult.code;
                 const resultado = document.getElementById('resultado');
-                resultado.innerHTML = "Código de barras detectado: " + code;
                 console.log("Código de barras detectado: ", code);
+
+                scannedCodes.push(code);
+                
+                var progressBar = document.getElementById('progress-bar');
+                var progressValue = (scannedCodes.length / 60) * 100;
+                progressBar.style.width = progressValue + '%';
+
+                // Actualiza el texto del elemento "progress-text"
+                var progressText = document.getElementById('progress-text');
+                progressText.textContent = progressValue.toFixed(0) + '%';
+
+                if (scannedCodes.length >= 30) {
+                    Quagga.stop();
+
+                    // Contar las repeticiones de cada valor
+                    var countMap = {};
+                    for (var i = 0; i < scannedCodes.length; i++) {
+                        var currentCode = scannedCodes[i];
+                        if (!countMap[currentCode]) {
+                            countMap[currentCode] = 1;
+                        } else {
+                            countMap[currentCode]++;
+                        }
+                    }
+
+                    // Encontrar el valor con más repeticiones
+                    var mostRepeatedCode = null;
+                    var maxCount = 0;
+                    for (var currentCode in countMap) {
+                        if (countMap[currentCode] > maxCount) {
+                            maxCount = countMap[currentCode];
+                            mostRepeatedCode = currentCode; // Cambio "code" por "currentCode"
+                        }
+                    }
+                    console.log("Count map:", countMap);
+                    console.log("Most repeated code:", mostRepeatedCode);
+                    
+                    setTimeout(function () {
+                        window.location.href = "../nuevo_producto.php?most_repeated_code=" + mostRepeatedCode;
+                    }, 2000); // Redirigir a nuevo_producto.php después de 2 segundos
+                }
+
             });
         }
 
 
         // Start/stop scanner
-        document.getElementById("btn").addEventListener("click", function () {
-            if (_scannerIsRunning) {
-                Quagga.stop();
-            } else {
-                startScanner();
-            }
-        }, false);
+    startScanner();
+    document.getElementById("btn").addEventListener("click", function () {
+        if (_scannerIsRunning) {
+            Quagga.stop();
+            setTimeout(function () {
+                    window.location.href = "../nuevo_producto.php?most_repeated_code=" + 0;
+                }, 2000); // Redirigir a nuevo_producto.php después de 2 segundos
+        } else {
+            startScanner();
+        }
+    }, false);
+    startScanner();
     </script>
 </body>
 

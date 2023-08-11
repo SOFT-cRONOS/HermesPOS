@@ -1,4 +1,3 @@
-
 <?php
 //configurar todos los graficos al pie y eliminar archivos originales.
 

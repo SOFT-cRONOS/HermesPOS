@@ -1,0 +1,46 @@
+body {
+	background-color: #f4f4f4;
+}
+
+/* In order to place the tracking correctly */
+        canvas.drawing, canvas.drawingBuffer {
+            position: absolute;
+            left: 2%;
+            top: 0;
+        }
+
+
+.container {
+	margin-top: 50px;
+}
+
+#scanner-container {
+	width: 100%;
+	max-width: 370px;
+	height: 310px;
+	border: 1px solid #ddd;
+	background-color: white;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+
+#progress-bar-container {
+	width: 100%;
+	max-width: 370px;
+}
+
+.progress {
+	height: 20px;
+	background-color: #f3f3f3;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.progress-bar {
+	background-color: #007bff;
+	transition: width 0.3s;
+}
+
+#btn {
+	margin-top: 5px;
+}

@@ -95,17 +95,17 @@ function addCArticuloS($pdo, $idcategoria, $codigo, $nombre, $stock, $descripcio
 
     if (!$success) {
         $errorInfo = $stmt->errorInfo();
+        echo $errorInfo[2];
         throw new Exception($errorInfo[2]);
     }
 
     return $pdo->lastInsertId();
 }
 
-function addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra,
-                        $precio_venta, $ganancia, $stock, $adescripcion, $imagen, $compuesto, $estado){
+function addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra, $precio_venta, $ganancia, $stock, $adescripcion, $imagen, $compuesto, $estado){
     
     // Consulta preparada
-    $sql = "INSERT INTO variante_articulo (id_articulo, codigo, nombre, precio_compra, precio_venta, ganancia, stock, descripcion, imagen, compuesto, estado)
+    $sql = "INSERT INTO variante_articulo (idarticulo, codigo, nombre, precio_compra, precio_venta, ganancia, stock, descripcion, imagen, compuesto, estado)
              VALUES (:idarticulo, :codigo, :nombre, :precio_compra, :precio_venta, :ganancia, :stock, :descripcion, :imagen, :compuesto, :estado)";
 
     // Valores a insertar
@@ -113,16 +113,19 @@ function addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra,
         ':idarticulo' => $idArticulo,
         ':codigo' => $acodigo,
         ':nombre' => $anombre,
-        ':precio_compra' => $precio_compra,
-        ':precio_venta' => $precio_venta,
-        ':ganancia' => $ganancia,
-        ':stock' => $stock,
+        ':precio_compra' => intval($precio_compra),
+        ':precio_venta' => intval($precio_venta),
+        ':ganancia' => intval($ganancia),
+        ':stock' => intval($stock),
         ':descripcion' => $adescripcion,
         ':imagen' => $imagen,
         ':compuesto' => $compuesto,
         ':estado' => $estado
     );
 
+    foreach ($values as $valor) {
+        echo $valor . "<br>";
+    }
     // Preparar la consulta
     $stmt = $pdo->prepare($sql);
 
@@ -132,8 +135,10 @@ function addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra,
     // Verificar si ocurrieron errores
     if (!$success) {
         $errorInfo = $stmt->errorInfo();
+        echo $errorInfo[2];
         return $errorInfo[2]; // Mensaje de error
     } else {
+        echo "success";
         return "Success"; // Indicador de éxito
     }
 }
@@ -162,6 +167,9 @@ function cantReg($pdo, $nombretabla){
     }
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 
 // Conexión a la base de datos (asegúrate de tener la conexión aquí)
 require_once "../Admin/conect.php";
@@ -169,43 +177,43 @@ $pdo = connect_sql_pdo();
 
 
 // Manejar el formulario de agregar artículo simple
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["addArtiucloSimple"])) {
-    
-    
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["addArtiucloSimple"])) {  
     //clase articulo
     $idcategoria = $_POST["idcategoria"];
     $codigo = $_POST["codigo"];
     $nombre = $_POST["clnombre"]; 
     $descripcion = $_POST["descripcion"]; 
-    $um = $_POST["um"]; 
-    $estado = $_POST["estado"]; 
+    $um = $_POST["um"];
+    $estado = false;
     $stock = 0; 
 
 
     //articulo
     //agrego la clase de producto y me devuelvo el id
-    $idArticulo = addCArticuloS($pdo, $idcategoria, $codigo, $nombre, $stock, $descripcion, $um, $estado);
+    $idArticulo = intval(addCArticuloS($pdo, $idcategoria, $codigo, $nombre, $stock, $descripcion, $um, $estado));
     //cuento cuantas variantes hay y le sumo el codigo para generar el codigo de la variante
-    $acodigo = $codigo + cantReg($pdo, 'variante_articulo');
-    $precio_compra = $_POST["stock"]; 
+    $acodigo = $codigo . '_' . cantReg($pdo, 'variante_articulo');
+    $anombre = $nombre;
+    $precio_compra = $_POST["precio_compra"]; 
     $precio_venta = $_POST["precio_venta"]; 
-    $ganancia = $_POST["stock"]; 
+    $ganancia = $_POST["ganancia"]; 
     $stock = $_POST["stock"];
     $adescripcion = $descripcion;
     $imagen = $_POST["imagen"];
-    $compuesto = 0;
-    $estado = 0;
+    $compuesto = false;
+    $aestado = false;
 
     // Llamar a la función para agregar artículo
-    $consulta = addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra,
-                                $precio_venta, $ganancia, $stock, $adescripcion, $imagen, $compuesto, $estado);
+    $consulta = addVarArticulo($pdo, $idArticulo, $acodigo, $anombre, $precio_compra, $precio_venta, $ganancia, $stock, $adescripcion, $imagen, $compuesto, $aestado);
 
     if ($consulta[0] !== '00000') {
-        header("Location: ../pages/nuevo_producto.php?estado=invalid" . $errorInfo[2]); // El mensaje de error se encuentra en el índice 2 del array
+        header("Location: ../pages/nuevo_producto.php?estado=correct"); // El mensaje de error se encuentra en el índice 2 del array
+        exit;
     } else {
-        header("Location: ../pages/nuevo_producto.php?estado=correct");
+       header("Location: ../pages/nuevo_producto.php?estado=invalid");
+       exit;
     }
-    exit;
+    
 }
 
 // Manejar el formulario de actualizar artículo

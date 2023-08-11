@@ -1,4 +1,21 @@
 <!-- Código de acordeón para Bootstrap 4 -->
+<?php
+if (isset($_GET['most_repeated_code'])) {
+    $BarCode = $_GET['most_repeated_code'];
+} else {
+    $BarCode = ""; // Valor por defecto si el parámetro no está presente
+}
+?>
+
+<div class="row mt-4">                                 
+                <div class="col-sm-3 pb-3">
+                    <label for="codigo">Codigo</label> 
+                    <input class="form-control" value='<?php echo $BarCode ?>' name="codigo" placeholder="XXXXX" type="text">
+                    <a class="btn btn-primary btn-sm" href="barcode/lector.html" role="button" style="margin-top:3px">Escanear</a>
+                </div>
+</div>
+
+
 <div class="accordion" id="accordionExample">
   <div class="card">
     <div class="card-header" id="headingOne">
@@ -18,8 +35,8 @@
             <div class="row mt-4">                                 
                 <div class="col-sm-3 pb-3">
                     <label for="codigo">Codigo</label> 
-                    <input class="form-control" id="codigo" name="codigo" placeholder="XXXXX" type="text">
-                    <a class="btn btn-primary btn-sm" href="Lector_codigo_barras/test.html" role="button" style="margin-top:3px">Escanear</a>
+                    <input class="form-control" value='<?php echo $BarCode ?>' name="codigo" placeholder="XXXXX" type="text">
+                    <a class="btn btn-primary btn-sm" href="barcode/lector.html" role="button" style="margin-top:3px">Escanear</a>
                 </div>
                 <div class="col-sm-2 pb-3">
                     <!-- combobox  -->                                        
@@ -29,7 +46,7 @@
                         </option>
                         <?php 
                             foreach ($categorias as $id => $nombre) {
-                                echo "<option> $nombre </option>";
+                                echo "<option value=\"$id\">$nombre</option>";
                             } 
                         ?>
                     </select>
@@ -84,7 +101,7 @@
                         </option>
                         <?php 
                             foreach ($categorias as $id => $nombre) {
-                                echo "<option> $nombre </option>";
+                                echo "<option value=\"$id\">$nombre</option>";
                             } 
                         ?>
                     </select>

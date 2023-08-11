@@ -91,8 +91,8 @@ VALUES (2, '0101', 'Vinilo 651', 3, 'Vinilo Corte oracal', 0);
 CREATE TABLE variante_articulo (
     id_variante INT AUTO_INCREMENT PRIMARY KEY,
     idarticulo INT,
-    codigo INT,
-    nombre varchar(100),
+    codigo  VARCHAR(50),
+    nombre VARCHAR(100),
     precio_venta DECIMAL(11,2),
     precio_compra DECIMAL(11,2),
     ganancia INT,

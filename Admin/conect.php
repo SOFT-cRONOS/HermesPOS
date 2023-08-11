@@ -1,4 +1,3 @@
-
 <?php
 function connect_sql() { //conexion a sql
     // Configuración de la conexión a la base de datos

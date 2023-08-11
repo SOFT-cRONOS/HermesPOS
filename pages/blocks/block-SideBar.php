@@ -74,9 +74,9 @@
                         <!-- subtitulo <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item" href="productos.php">Lista de Productos</a>
                         <a class="collapse-item" href="nuevo_producto.php">Nuevo Producto</a>
-                        <a class="collapse-item" href="pages/cards.html">Descuentos</a>
-                        <a class="collapse-item" href="pages/cards.html">Historial de Inventario</a>
-                        <a class="collapse-item" href="pages/cards.html">Categorias</a>
+                        <a class="collapse-item" href="descuentos.php">Descuentos</a>
+                        <a class="collapse-item" href="history-ing.php">Historial de Inventario</a>
+                        <a class="collapse-item" href="categorias.php">Categorias</a>
                     </div>
                 </div>
             </li>

@@ -167,10 +167,6 @@ function cantReg($pdo, $nombretabla){
     }
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-
 // Conexión a la base de datos (asegúrate de tener la conexión aquí)
 require_once "../Admin/conect.php";
 $pdo = connect_sql_pdo();

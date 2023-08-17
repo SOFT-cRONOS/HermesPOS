@@ -1,6 +1,10 @@
 
 <!-- Menu Nueva Variante articulo-->
-<div class="row mt-4">
+<div class="row mt-4">                                
+    <div class="col-sm-2 pb-3">
+        <label for="exampleAccount">Codigo Variante</label> 
+        <input class="form-control" id="codigovariante" placeholder="XXXXX" type="text">
+    </div>
     <div class="col-sm-2 pb-3">
         <label for="exampleFirst">Nombre</label> 
         <input class="form-control" id="exampleFirst" type="text">
@@ -14,6 +18,8 @@
             <label class="custom-file-label" for="customFile">Ruta/Link</label>
         </div>
     </div>
+</div>
+<div class="row mt-4"> 
     <div class="col-sm-2 pb-3">
         <label for="exampleAmount">Precio Compra</label>
         <div class="input-group">
@@ -54,3 +60,6 @@
 </div>
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
+<script>
+    cantvariantes = <?php echo cantReg($pdo, 'variante_articulo'); ?>;
+</script>

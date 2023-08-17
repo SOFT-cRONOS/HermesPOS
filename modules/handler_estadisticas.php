@@ -1,44 +1,45 @@
 <?php
 
-    function palco_productos($conn){
+function palco_productos($conn) {
     // Define the array to store the sales per category
     $productos_mas_vendidos = array();
 
     // SQL query to get the number of sales per category
-    $sql = "SELECT c.nombre AS categoria, COUNT(dt.idarticulo) AS total_ventas
+    $sql = "SELECT c.idcategoria, c.nombre AS categoria, IFNULL(SUM(dt.cantidad), 0) AS total_ventas
             FROM categoria c
-            LEFT JOIN articulo a ON c.idcategoria = a.idcategoria
-            LEFT JOIN detalle_transaccion dt ON a.idarticulo = dt.idarticulo
-            GROUP BY c.nombre";
+            LEFT JOIN clase_articulo ca ON c.idcategoria = ca.idcategoria
+            LEFT JOIN variante_articulo va ON ca.idarticulo = va.idarticulo
+            LEFT JOIN detalle_transaccion dt ON va.id_variante = dt.id_variante
+            GROUP BY c.idcategoria, c.nombre
+            ORDER BY c.idcategoria";
 
     $result = $conn->query($sql);
 
     if ($result) {
-        $row_count = 0;
         while ($row = $result->fetch_assoc()) {
             $categoria = $row['categoria'];
-            $total_ventas = $row['total_ventas'];
+            $total_ventas = (int)$row['total_ventas'];
 
             // Add the category and its total sales to the array
             $productos_mas_vendidos[] = array(
                 'categoria' => $categoria,
-                'total_ventas' => (int)$total_ventas,
+                'total_ventas' => $total_ventas,
             );
-            // Increment the row count
-            $row_count++;
-        }
-
-        // Fill remaining rows with 0 if less than 3 rows
-        while ($row_count < 3) {
-            $productos_mas_vendidos[] = array(
-                'categoria' => '',
-                'total_ventas' => 0,
-            );
-            $row_count++;
         }
 
         // Free the result set
         $result->free();
+    } else {
+        // Handle the case where the query fails
+        // You might want to log an error or return an error message
+    }
+
+    // Fill remaining rows with 0 if less than 3 rows
+    while (count($productos_mas_vendidos) < 3) {
+        $productos_mas_vendidos[] = array(
+            'categoria' => 'no hay productos',
+            'total_ventas' => 0,
+        );
     }
 
     // Devuelve el array con los datos de los productos más vendidos
@@ -46,9 +47,9 @@
 }
 
 
-function montos_mes($con){
+function montos_mes($conn){
         //coneccion y datos de usuario
-    require_once "Admin/conect.php";
+    require_once "../Admin/conect.php";
 
     $conn = connect_sql();
 

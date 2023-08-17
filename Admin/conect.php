@@ -118,6 +118,7 @@ function verificar_init(){ //da los datos de usuario o manda al login
         // Convertir el JSON a un array asociativo
         $datos = json_decode($datos_json, true);
 
+
         return $datos;
         // Usar los valores
         //$_SESSION['username'] = $datos['UserName_init'];

@@ -12,12 +12,18 @@ require_once "../modules/handler_productos.php";
 // Iniciar la sesión para acceder a las variables de sesión
 session_start();
 
+
 $conn = connect_sql();
 
 $datos = verificar_init();
 
 //obtengo los productos
 $result = getProductos($conn);
+
+$_SESSION['username'] = $datos['UserName_init'];
+$nombre_completo = $datos['UserDataName'];
+$username = $_SESSION['username'];
+
 
 // Cerrar la conexión
 $conn->close();
